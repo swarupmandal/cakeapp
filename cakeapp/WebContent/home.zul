@@ -1,0 +1,103 @@
+<?page title="Cake home" contentType="text/html;charset=UTF-8"?>
+<zk>
+<borderlayout apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.appsquad.cake.controller.HomeController')">
+	<north size="7%">
+		<div>
+				<menubar id="menubar">
+				
+					<menuitem width="80%" label="@bind(vm.userId)" style="font-weight:bold;font-size:20px;color:#00AAAA;"/>
+
+					<menuitem id="changepasswordmenu"
+						label="Change Password" onClick="@command('onClickChangePassword')">
+					</menuitem>
+
+					<menuitem label="Home" href="home.zul"/>
+					<menuitem label="Logout" id="logout"
+						onClick="@command('onClickLogout')" />
+				</menubar>
+			</div>
+	</north>
+	
+	<west size="15%" title="Menus"  flex="true" splittable="true"
+			collapsible="true" style="background:#E6F2FF;">
+		<borderlayout width="100%" height="100%">
+			<center>
+				<tree>
+					<treechildren>
+					  <treeitem open="false">
+						  <treerow>
+							<treecell label="Master"></treecell>	
+						  </treerow>	
+						
+						  <treechildren>
+								<treeitem open="false">
+									<treerow>
+									  <treecell label="Master"></treecell>
+									</treerow>
+									<treechildren>
+										<treeitem open="false">
+											<treerow>
+												<treecell label="Employee Info" onClick='inclResults.setSrc("/WEB-INF/view/master.zul")'></treecell>
+											</treerow>
+										</treeitem>
+										
+										<treeitem open="false" visible="false">
+											<treerow>
+												<treecell label="Component Master" onClick='inclResults.setSrc("/WEB-INF/view/componentmaster.zul")'></treecell>
+											</treerow>
+										</treeitem>
+										
+										<treeitem open="false" visible="false">
+											<treerow>
+												<treecell label="Component Allocation" onClick='inclResults.setSrc("/WEB-INF/view/componentallocation.zul")'></treecell>
+											</treerow>
+										</treeitem>
+										
+						
+									</treechildren>
+								</treeitem>
+								
+								<!-- payslip -->
+									
+								<treeitem open="false" visible="false">
+									<treerow>
+									  <treecell label="Payslip Section"></treecell>
+									</treerow>
+									<treechildren>
+									
+										<treeitem open="false">
+											<treerow>
+												<treecell label="Generate Payslip" onClick='inclResults.setSrc("/WEB-INF/view/generatepayslip.zul")'></treecell>
+											</treerow>
+										</treeitem>
+									
+									
+									
+									
+									</treechildren>
+								
+								
+								</treeitem>
+								
+						  </treechildren>	
+					
+					  </treeitem>	
+					</treechildren>
+				</tree>
+			</center>
+		</borderlayout>
+	</west>
+	
+	<center>
+		<borderlayout>
+			<north size="100%" splittable="true" autoscroll="true"
+					flex="true">
+					<include id="inclResults" mode="instant"
+						style="overflow: auto; overflow-x:scroll ;">
+					</include>
+			</north>
+		</borderlayout>
+	</center>
+	
+</borderlayout>
+</zk>

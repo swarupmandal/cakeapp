@@ -1,0 +1,63 @@
+<?page title="Employees" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="EMPLOYEE INFORMATION" border="none" apply="org.zkoss.bind.BindComposer" 
+     viewModel="@id('vm') @init('com.appsquad.paybooks.controller.EmployeeMasterController')">
+	
+	<div>
+		<tabbox>
+			<tabs>
+				<tab label="Add Employee"></tab>
+				<tab label="Existing Emploee"></tab>
+			
+			</tabs>
+			<tabpanels>
+	            <tabpanel>
+					<div>
+					   <hlayout spacing="20px">	
+						   <textbox placeholder="Employee Code" value="@bind(vm.employeeMasterBean.employeeCode)"></textbox>	
+						   <textbox placeholder="Employee Name" value="@bind(vm.employeeMasterBean.employeeName)"></textbox>	
+				       </hlayout> 		
+					   <div height="435px"></div>	
+					   <div align="center">	
+					   	 <button label="Save Employee Details" onClick="@command('onClickSave')" style="font-weight: bold"></button>
+							
+	                   </div>
+	
+	
+					</div>
+				</tabpanel>
+				
+				<tabpanel>
+					<div>
+					   <grid model="@bind(vm.employeeMasterBeanList)" mold="paging" pageSize="10">
+					   		<columns>
+					   		    <column label="Sl No" align="center" width="50px"></column>
+					   			<column label="Employee Name" align="center"></column>
+					   			<column label="Employee Code" align="center"></column>
+					   			<column label="Date of Joining" visible="false"></column>
+					   			<column label="Current Employee" align="center"></column>
+					   			<column label="Action" align="left"></column>
+					   		</columns>
+					   		<rows>
+					   		  <template name="model" var = "v">
+					   		    <row>
+					   				<label value="@bind(v.slNo)"></label>
+					   				<textbox value="@bind(v.employeeName)" readonly="true" width="100%"></textbox>
+					   				<textbox value="@bind(v.employeeCode)" readonly="true" width="100%"></textbox>
+					   				<textbox value="@bind(v.dojStr)" visible="false" width="100%"></textbox>
+					   				<textbox value="@bind(v.curentEmployee)" readonly="true" width="100%"></textbox>
+					   				<button label="Update" onClick="@command('onClickUpdate', bean = v)"></button>
+					   			</row>
+					   		  </template>	
+					   		</rows>
+					   		
+					   
+					   </grid>
+					</div>
+				</tabpanel>
+	
+		 </tabpanels>	
+		</tabbox>
+	</div>
+</window>
+</zk>

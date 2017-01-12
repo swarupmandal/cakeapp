@@ -1,0 +1,31 @@
+<?page title="Cakes"?>
+<zk>
+<window title="welcome" border="none" height="100%" apply="org.zkoss.bind.BindComposer" 
+       viewModel="@id('vm') @init('com.appsquad.cake.controller.LoginController')">
+	
+	   <div>
+	     <hlayout >  
+	   	  <div width="1085px" height="500px" style="border : 1px solid" >
+	   	  	<textbox></textbox>
+	   	  
+	   	  
+	   	  
+	   	  </div>
+	   	  <div style="border : 1px solid" width="255px" height="500px">
+	   	  	<vbox>
+		   	  	<textbox placeholder="User Id" value="@bind(vm.loginBean.userId)"></textbox>
+		   	  	<textbox placeholder="Password" value="@bind(vm.loginBean.password)" type="password"></textbox>
+		   	  	<button label="Login" onClick="@command('onCLickLogin')"></button>
+		   	  	
+	   	  	</vbox>
+	   	  
+	   	  
+	   	  </div>	
+	     </hlayout>
+	   </div>	
+	
+
+</window>
+</zk>
+
+
