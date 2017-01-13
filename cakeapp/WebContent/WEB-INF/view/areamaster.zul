@@ -1,0 +1,44 @@
+<?page title="Service srea" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="AREA MASTER" border="none" apply="org.zkoss.bind.BindComposer" 
+  viewModel="@id('vm') @init('com.appsquad.cake.controller.AreaMasterController')">
+
+	<div>
+  	<div>
+  		<hlayout>
+  			<textbox placeholder="Enter Area Name" value="@bind(vm.areaMasterBean.areaName)"></textbox> 
+  			<button label="Save" style="font-size : bold" onClick="@command('onClickSave')"></button>
+  		</hlayout>
+  	</div>
+  	<space></space>
+  	<div>	
+  		<grid model="@bind(vm.areaMasterBeanList)">
+  			<columns>
+  				<column label="Sl No"></column>
+  				<column label="Area" style="font-size : bold"></column>
+  				<column label="Active" style="font-size : bold"></column>
+  				<column label="Action" style="font-size : bold"></column>
+  			</columns>
+  			<rows>
+  			  <template name="model" var = "v">	
+  				<row>
+  					<label value="@bind(v.slNo)"></label>
+  					<textbox value="@bind(v.areaName)"></textbox>
+  					<combobox value="@bind(v.isActive)" readonly="true">
+  					  <comboitem label="YES"></comboitem>
+  					  <comboitem label="NO"></comboitem>
+  				    </combobox>
+  					<button label="Update" style="font-size : bold" onClick="@command('onClickUpdate', bean = v)"></button>
+  				</row>
+  			  </template>	
+  			</rows>
+  	 
+  	 	</grid>
+  	 </div>
+  </div>
+
+
+
+
+</window>
+</zk>

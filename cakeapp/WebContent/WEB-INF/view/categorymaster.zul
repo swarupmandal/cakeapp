@@ -1,0 +1,46 @@
+<?page title="Category" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="CATEGORY MASTER" border="none" apply="org.zkoss.bind.BindComposer" 
+  viewModel="@id('vm') @init('com.appsquad.cake.controller.CategoryMasterController')">
+
+	<div>
+  	<div>
+  		<hlayout>
+  			<textbox placeholder="Enter Category Name" value="@bind(vm.categoryMasterBean.categoryName)"></textbox>
+  			<textbox placeholder="Enter Category Image" value="@bind(vm.categoryMasterBean.categoryImage)"></textbox> 
+  			<button label="Save" style="font-size : bold" onClick="@command('onClickSave')"></button>
+  		</hlayout>
+  	</div>
+  	<space></space>
+  	<div>	
+  		<grid model="@bind(vm.categoryMasterList)">
+  			<columns>
+  				<column label="Sl No"></column>
+  				<column label="Category" style="font-size : bold"></column>
+  				<column label="Image" style="font-size : bold"></column>
+  				<column label="Active" style="font-size : bold"></column>
+  				<column label="Action" style="font-size : bold"></column>
+  			</columns>
+  			<rows>
+  			  <template name="model" var = "v">	
+  				<row>
+  					<label value="@bind(v.slNo)"></label>
+  					<textbox value="@bind(v.categoryName)"></textbox>
+  					<textbox value="@bind(v.categoryImage)"></textbox>
+  					<combobox value="@bind(v.isActive)" readonly="true">
+  					  <comboitem label="YES"></comboitem>
+  					  <comboitem label="NO"></comboitem>
+  				    </combobox>
+  					<button label="Update" style="font-size : bold" onClick="@command('onClickUpdate', bean = v)"></button>
+  				</row>
+  			  </template>	
+  			</rows>
+  	 
+  	 	</grid>
+  	 </div>
+  </div>
+
+
+
+</window>
+</zk>

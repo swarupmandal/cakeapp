@@ -1,0 +1,40 @@
+<?page title="City Master" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="CITY MASTER" border="none" apply="org.zkoss.bind.BindComposer" 
+  viewModel="@id('vm') @init('com.appsquad.cake.controller.CityMasterController')">
+  
+  <div>
+  	<div>
+  		<hlayout>
+  			<textbox placeholder="Enter City Name" value="@bind(vm.cityMasterBean.cityName)"></textbox> 
+  			<button label="Save" style="font-size : bold" onClick="@command('onClickSave')"></button>
+  		</hlayout>
+  	</div>
+  	<space></space>
+  	<div>	
+  		<grid model="@bind(vm.cityMasterBeanList)">
+  			<columns>
+  				<column label="Sl No"></column>
+  				<column label="City" style="font-size : bold"></column>
+  				<column label="Active" style="font-size : bold"></column>
+  				<column label="Action" style="font-size : bold"></column>
+  			</columns>
+  			<rows>
+  			  <template name="model" var = "v">	
+  				<row>
+  					<label value="@bind(v.slNo)"></label>
+  					<textbox value="@bind(v.cityName)"></textbox>
+  					<combobox value="@bind(v.isActive)" readonly="true">
+  					  <comboitem label="YES"></comboitem>
+  					  <comboitem label="NO"></comboitem>
+  				    </combobox>
+  					<button label="Update" style="font-size : bold" onClick="@command('onClickUpdate', bean = v)"></button>
+  				</row>
+  			  </template>	
+  			</rows>
+  	 
+  	 	</grid>
+  	 </div>
+  </div>		
+</window>
+</zk>
