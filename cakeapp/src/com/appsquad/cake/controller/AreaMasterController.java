@@ -16,13 +16,23 @@ import org.zkoss.zul.Messagebox;
 
 import com.appsquad.cake.bean.AreaMasterBean;
 import com.appsquad.cake.bean.CityMasterBean;
+import com.appsquad.cake.dao.AreaMasterDao;
+import com.appsquad.cake.dao.CityMasterDao;
 import com.appsquad.cake.model.service.AreaMasterService;
 import com.appsquad.cake.model.service.CityMasterService;
 
 public class AreaMasterController {
 
 	private AreaMasterBean areaMasterBean = new AreaMasterBean();
+	private CityMasterBean cityMasterBean = new CityMasterBean();
+	private AreaMasterBean areaWithCityBean = new AreaMasterBean() ;
+	private CityMasterBean existingcityAreaBean = new CityMasterBean();
+	private AreaMasterBean areacityMappedBean = new AreaMasterBean();
 	
+	
+	private ArrayList<AreaMasterBean> areawithcityMappedList;
+	private ArrayList<AreaMasterBean> areawithcityList;
+	private ArrayList<CityMasterBean> cityMasterBeanList;
 	private ArrayList<AreaMasterBean> areaMasterBeanList;
 	
 	
@@ -38,6 +48,7 @@ public class AreaMasterController {
 		userId = (String) session.getAttribute("userId");
 		
 		areaMasterBeanList = AreaMasterService.loadAreas(userId, areaMasterBean);
+		cityMasterBeanList = CityMasterDao.loadCity();
 	}
 
 	@Command
@@ -66,6 +77,82 @@ public class AreaMasterController {
 		}
 	}
 
+	
+	@Command
+	@NotifyChange("*")
+	public void onSelectCity(){
+		areawithcityList = AreaMasterService.loadAreasforCity(cityMasterBean.getCityId());
+		if(areawithcityList.size() ==0){
+			Messagebox.show("No Area Found", "Alert", Messagebox.OK, Messagebox.EXCLAMATION);
+		}
+		
+	}
+	
+	
+	@Command
+	@NotifyChange("*")
+	public void onClickSaveAreaWithCity(){
+		if(AreaMasterService.areacityVal(cityMasterBean, areaWithCityBean)){
+			int i = 0;
+			i= AreaMasterDao.saveAreaWithCity(userId, cityMasterBean, areaWithCityBean);
+			if(i>0){
+				Messagebox.show("Saved Successfully", "Information", Messagebox.OK, Messagebox.INFORMATION);
+				AreaMasterService.areacityVal(cityMasterBean, areaWithCityBean);
+				AreaMasterService.cityAreaClear(cityMasterBean, areaWithCityBean);
+				cityMasterBeanList = CityMasterDao.loadCity();
+			}
+					
+		}
+		
+		
+	}
+	
+	@Command
+	@NotifyChange("*")
+	public void onExistingSelectCity(){
+		areawithcityMappedList = AreaMasterService.loadAreasforCityMapped(existingcityAreaBean.getCityId());
+	}
+	
+	@Command
+	@NotifyChange("*")
+	public void updateCityAreaMap(@BindingParam("bean") AreaMasterBean bean){
+		int i =0;
+		i = AreaMasterService.updateAreaCityMAp(userId, bean);
+		if(i>0){
+			Messagebox.show("Updated Successfully", "Information", Messagebox.OK, Messagebox.INFORMATION);
+			areawithcityMappedList = AreaMasterService.loadAreasforCityMapped(existingcityAreaBean.getCityId());
+		}
+	}
+	
+	@Command
+	@NotifyChange("*")
+	public void onClickClearCityMap(){
+		AreaMasterService.cityAreaMapCityClear(existingcityAreaBean);
+		if(areawithcityMappedList != null){
+			areawithcityMappedList.clear();
+		}
+		cityMasterBeanList = CityMasterDao.loadCity();
+		
+	}
+	
+	@Command
+	@NotifyChange("*")
+	public void onClickClear(){
+		cityMasterBean.setCityId(null);
+		cityMasterBean.setCityName(null);
+		
+		areaMasterBean.setAreaId(null);
+		areaMasterBean.setAreaName(null);
+		
+		areaWithCityBean.setAreaId(null);
+		areaWithCityBean.setAreaName(null);
+		
+		if(areawithcityList != null){
+			areawithcityList.clear();
+		}
+		cityMasterBeanList = CityMasterDao.loadCity();
+	}
+	
 	public AreaMasterBean getAreaMasterBean() {
 		return areaMasterBean;
 	}
@@ -104,6 +191,63 @@ public class AreaMasterController {
 
 	public void setSession(Session session) {
 		this.session = session;
+	}
+
+	public CityMasterBean getCityMasterBean() {
+		return cityMasterBean;
+	}
+
+	public void setCityMasterBean(CityMasterBean cityMasterBean) {
+		this.cityMasterBean = cityMasterBean;
+	}
+
+	public ArrayList<CityMasterBean> getCityMasterBeanList() {
+		return cityMasterBeanList;
+	}
+
+	public void setCityMasterBeanList(ArrayList<CityMasterBean> cityMasterBeanList) {
+		this.cityMasterBeanList = cityMasterBeanList;
+	}
+
+	public AreaMasterBean getAreaWithCityBean() {
+		return areaWithCityBean;
+	}
+
+	public void setAreaWithCityBean(AreaMasterBean areaWithCityBean) {
+		this.areaWithCityBean = areaWithCityBean;
+	}
+
+	public ArrayList<AreaMasterBean> getAreawithcityList() {
+		return areawithcityList;
+	}
+
+	public void setAreawithcityList(ArrayList<AreaMasterBean> areawithcityList) {
+		this.areawithcityList = areawithcityList;
+	}
+
+	public CityMasterBean getExistingcityAreaBean() {
+		return existingcityAreaBean;
+	}
+
+	public void setExistingcityAreaBean(CityMasterBean existingcityAreaBean) {
+		this.existingcityAreaBean = existingcityAreaBean;
+	}
+
+	public AreaMasterBean getAreacityMappedBean() {
+		return areacityMappedBean;
+	}
+
+	public void setAreacityMappedBean(AreaMasterBean areacityMappedBean) {
+		this.areacityMappedBean = areacityMappedBean;
+	}
+
+	public ArrayList<AreaMasterBean> getAreawithcityMappedList() {
+		return areawithcityMappedList;
+	}
+
+	public void setAreawithcityMappedList(
+			ArrayList<AreaMasterBean> areawithcityMappedList) {
+		this.areawithcityMappedList = areawithcityMappedList;
 	}
 	
 }

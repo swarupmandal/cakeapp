@@ -4,10 +4,19 @@
   viewModel="@id('vm') @init('com.appsquad.cake.controller.AreaMasterController')">
 
 	<div>
-  	<div>
-  		<hlayout>
+	
+	<tabbox>
+	   <tabs>
+	   	  <tab label="Add New Area"></tab>
+	   	  <tab label="Area City Mappig"></tab>	
+	   </tabs>	
+	   <tabpanels>
+	   		<tabpanel>
+	   			<div>
+  		<hlayout spacing="30px">
   			<textbox placeholder="Enter Area Name" value="@bind(vm.areaMasterBean.areaName)"></textbox> 
-  			<button label="Save" style="font-size : bold" onClick="@command('onClickSave')"></button>
+  			<button label="Save" style="font-weight : bold" onClick="@command('onClickSave')"></button>
+  			
   		</hlayout>
   	</div>
   	<space></space>
@@ -24,21 +33,80 @@
   				<row>
   					<label value="@bind(v.slNo)"></label>
   					<textbox value="@bind(v.areaName)"></textbox>
-  					<combobox value="@bind(v.isActive)" readonly="true">
-  					  <comboitem label="YES"></comboitem>
-  					  <comboitem label="NO"></comboitem>
-  				    </combobox>
-  					<button label="Update" style="font-size : bold" onClick="@command('onClickUpdate', bean = v)"></button>
-  				</row>
-  			  </template>	
-  			</rows>
-  	 
-  	 	</grid>
-  	 </div>
-  </div>
-
-
-
-
+	  					<combobox value="@bind(v.isActive)" readonly="true">
+	  					  <comboitem label="YES"></comboitem>
+	  					  <comboitem label="NO"></comboitem>
+	  				    </combobox>
+	  					<button label="Update" style="font-weight : bold" onClick="@command('onClickUpdate', bean = v)"></button>
+	  				</row>
+	  			  </template>	
+		  			</rows>
+		  	 
+		  	 	</grid>
+		  	 </div>
+		  
+	   	 </tabpanel>
+	   	<tabpanel>
+	   		<div>
+	   		  <hlayout spacing="30px">	
+	   				<combobox placeholder="Select City" model="@bind(vm.cityMasterBeanList)" selectedItem="@bind(vm.cityMasterBean)" value="@bind(vm.cityMasterBean.cityName)" 
+	   				  onSelect="@command('onSelectCity')" readonly="true">
+	   					<template name="model" var = "v">
+	   						<comboitem value="@bind(v.cityId)" label="@bind(v.cityName)"></comboitem>
+	   					</template>
+	   				</combobox>
+	   				
+	   				<combobox placeholder="Select Area" model="@bind(vm.areawithcityList)" selectedItem="@bind(vm.areaWithCityBean)" 
+	   				 value="@bind(vm.areaWithCityBean.areaName)" readonly="true">
+	   					<template name="model" var = "v">
+	   					 <comboitem label="@bind(v.areaName)" value="@bind(v.areaId)"></comboitem>
+	   					</template>	
+	   				</combobox>
+	   				
+	   				<button label="Save" style="font-weight : bold" onClick="@command('onClickSaveAreaWithCity')"></button>
+	   				<button label="Clear" onClick="@command('onClickClear')" style="font-weight : bold"></button>
+	   		  </hlayout>	
+	   		</div>
+	   		<space></space>
+	   		<div>
+	   			<hlayout spacing="30px">
+				<combobox placeholder="Select City" model="@bind(vm.cityMasterBeanList)" selectedItem="@bind(vm.existingcityAreaBean)" 
+				 value="@bind(vm.existingcityAreaBean.cityName)" 
+	   			   onSelect="@command('onExistingSelectCity')" readonly="true">
+	   				<template name="model" var = "v">
+	   					<comboitem value="@bind(v.cityId)" label="@bind(v.cityName)"></comboitem>
+	   				</template>
+	   			</combobox>
+	   			
+	   			<button label="Clear" onClick="@command('onClickClearCityMap')" style="font-weight : bold"></button>
+	   			</hlayout>
+	   			<space></space>			
+				<grid model="@bind(vm.areawithcityMappedList)">
+				 	<columns>
+				 	 <column label="Sl No" style="font-weight : bold"></column>
+					 <column label="Area" style="font-weight : bold"></column>	
+					 <column label="Active"></column>	
+					 <column label="Action"></column>	
+					</columns>
+					<rows>
+					  <template name="model" var = "v">	
+						<row>
+							<label value="@bind(v.slNo)"></label>
+							<textbox value="@bind(v.areaName)" readonly="true"></textbox>
+							<combobox value="@bind(v.isActive)" readonly="true">
+								<comboitem label="YES"></comboitem>
+								<comboitem label="NO"></comboitem>
+							</combobox>
+							<button label="Update" style="font-weight : bold" onClick="@command('updateCityAreaMap', bean = v)"></button>
+						</row>
+					  </template>
+					</rows>
+				</grid>
+			</div>	   		
+	    </tabpanel>
+	   </tabpanels>
+	</tabbox>
+	
+  	</div>
 </window>
 </zk>

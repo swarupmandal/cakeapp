@@ -6,6 +6,8 @@ public class AreaMasterBean {
 	private String areaName;
 	private String isActive;
 	private int slNo;
+	private int cityAreaMapId;
+	
 	public Integer getAreaId() {
 		return areaId;
 	}
@@ -29,6 +31,12 @@ public class AreaMasterBean {
 	}
 	public void setSlNo(int slNo) {
 		this.slNo = slNo;
+	}
+	public int getCityAreaMapId() {
+		return cityAreaMapId;
+	}
+	public void setCityAreaMapId(int cityAreaMapId) {
+		this.cityAreaMapId = cityAreaMapId;
 	}
 
 }
