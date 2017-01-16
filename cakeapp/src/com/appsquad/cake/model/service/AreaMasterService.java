@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.zkoss.zhtml.Messagebox;
 
 import com.appsquad.cake.bean.AreaMasterBean;
+import com.appsquad.cake.bean.CategoryMasterBean;
 import com.appsquad.cake.bean.CityMasterBean;
 import com.appsquad.cake.dao.AreaMasterDao;
 import com.appsquad.cake.dao.CityMasterDao;
@@ -19,7 +20,13 @@ public class AreaMasterService {
 		return i;
 	}
 	
-	public static ArrayList<AreaMasterBean> loadAreas(String userName, AreaMasterBean bean){
+	public static ArrayList<AreaMasterBean> loadAreas(){
+		ArrayList<AreaMasterBean> list = new ArrayList<AreaMasterBean>();
+		list = AreaMasterDao.loadArea();
+		return list;
+	}
+	
+	public static ArrayList<AreaMasterBean> loadAreas(String userId, AreaMasterBean areaMasterBean){
 		ArrayList<AreaMasterBean> list = new ArrayList<AreaMasterBean>();
 		list = AreaMasterDao.loadArea();
 		return list;
@@ -65,6 +72,13 @@ public class AreaMasterService {
 			return false;
 		}
 	}
+	
+	public static ArrayList<AreaMasterBean> loadAreasforCategoryMapped(CategoryMasterBean bean){
+		ArrayList<AreaMasterBean> list = new ArrayList<AreaMasterBean>();
+		list = AreaMasterDao.loadAreaWithCategory(bean);
+		return list;
+	}
+	
 	
 	public static boolean areacityVal(CityMasterBean cityMasterBean, AreaMasterBean areaWithCityBean){
 

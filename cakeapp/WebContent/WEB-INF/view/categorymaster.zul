@@ -4,7 +4,15 @@
   viewModel="@id('vm') @init('com.appsquad.cake.controller.CategoryMasterController')">
 
 	<div>
-  	<div>
+  	<tabbox>
+  		<tabs>
+  			<tab label="Add Category"></tab>
+  			<tab label="Area Category Map"></tab>
+  		</tabs>
+  		<tabpanels>
+  			<tabpanel>
+  				
+  				<div>
   		<hlayout>
   			<textbox placeholder="Enter Category Name" value="@bind(vm.categoryMasterBean.categoryName)"></textbox>
   			<textbox placeholder="Enter Category Image" value="@bind(vm.categoryMasterBean.categoryImage)"></textbox> 
@@ -30,15 +38,83 @@
   					<combobox value="@bind(v.isActive)" readonly="true">
   					  <comboitem label="YES"></comboitem>
   					  <comboitem label="NO"></comboitem>
-  				    </combobox>
-  					<button label="Update" style="font-size : bold" onClick="@command('onClickUpdate', bean = v)"></button>
-  				</row>
-  			  </template>	
-  			</rows>
-  	 
-  	 	</grid>
-  	 </div>
-  </div>
+		  				    </combobox>
+		  					<button label="Update" style="font-size : bold" onClick="@command('onClickUpdate', bean = v)"></button>
+		  				</row>
+		  			  </template>	
+		  			</rows>
+		  	 
+		  	 	</grid>
+		  	 </div>
+		  
+  		</tabpanel>
+  		    <tabpanel>
+  				<div>
+	   		  <hlayout spacing="30px">	
+	   				<combobox placeholder="Select Category" model="@bind(vm.categoryMasterList)" selectedItem="@bind(vm.exCategoryMasterBean)" value="@bind(vm.exCategoryMasterBean.categoryName)" 
+	   				   readonly="true" onSelect="@command('onSelectExCat')">
+	   					<template name="model" var = "v">
+	   						<comboitem value="@bind(v.categoryId)" label="@bind(v.categoryName)"></comboitem>
+	   					</template>
+	   				</combobox>
+	   				
+	   				<combobox placeholder="Select Area" model="@bind(vm.exAreaMasterList)" selectedItem="@bind(vm.exAreaMasterBean)" 
+	   				 value="@bind(vm.exAreaMasterBean.areaName)" readonly="true">
+	   					<template name="model" var = "v">
+	   					 <comboitem label="@bind(v.areaName)" value="@bind(v.areaId)"></comboitem>
+	   					</template>	
+	   				</combobox>
+	   				
+	   				<button label="Save" style="font-weight : bold" onClick="@command('onClickSaveAreaWithCategory')"></button>
+	   				<button label="Clear" onClick="@command('onClickExClear')" style="font-weight : bold"></button>
+	   		  </hlayout>	
+	   		</div>
+	   		<space></space>
+	   		<div>
+	   			<hlayout spacing="30px">
+				<combobox placeholder="Select Category" model="@bind(vm.categoryMasterList)" selectedItem="@bind(vm.selectedexCategoryMasterBean)" 
+				 value="@bind(vm.selectedexCategoryMasterBean.categoryName)" 
+	   			   onSelect="@command('onSelectedExistingCategory')" readonly="true">
+	   				<template name="model" var = "v">
+	   					<comboitem value="@bind(v.categoryId)" label="@bind(v.categoryName)"></comboitem>
+	   				</template>
+	   			</combobox>
+	   			
+	   			<button label="Clear" onClick="@command('onClickClearCityMap')" style="font-weight : bold"></button>
+	   			</hlayout>
+	   			<space></space>			
+				<grid model="@bind(vm.categoryAreaMapList)">
+				 	<columns>
+				 	 <column label="Sl No" style="font-weight : bold"></column>
+				 	 <column label="Category" style="font-weight : bold"></column>
+					 <column label="Area" style="font-weight : bold"></column>	
+					 <column label="Active"></column>	
+					 <column label="Action"></column>	
+					</columns>
+					<rows>
+					  <template name="model" var = "v">	
+						<row>
+							<label value="@bind(v.slNo)"></label>
+							<textbox value="@bind(v.categoryName)" readonly="true"></textbox>
+							<textbox value="@bind(v.areaMasterBean.areaName)" readonly="true"></textbox>
+							<combobox value="@bind(v.isActive)" readonly="true">
+								<comboitem label="YES"></comboitem>
+								<comboitem label="NO"></comboitem>
+							</combobox>
+							<button label="Update" style="font-weight : bold" onClick="@command('updateCategoryAreaMap', bean = v)"></button>
+						</row>
+					  </template>
+					</rows>
+				</grid>
+			</div>
+  				
+  				
+  				
+  			
+  			</tabpanel>
+  	    </tabpanels>
+  	</tabbox>
+	</div>  	
 
 
 

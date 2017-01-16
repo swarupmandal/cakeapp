@@ -20,4 +20,8 @@ public class AreaMasterSql {
 	
 	public static final String updateMappedAreaWithCitySql = "update ca_city_area_map set is_active = ?, updated_by = ?, update_date = current_timestamp where city_area_map_id = ? ";
 	
+	public static final String loadAreaWithCategorySql = " select area_master_id, area_name,is_active from ca_area_master " +
+														 " where area_master_id not in(select area_id from ca_area_category_map where category_id = ? ) " +
+														 " and is_active = 'Y' order by area_master_id";
+	
 }

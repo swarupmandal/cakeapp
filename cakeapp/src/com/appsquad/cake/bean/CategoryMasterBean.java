@@ -7,7 +7,8 @@ public class CategoryMasterBean {
 	private String categoryImage;
 	private String isActive;
 	private int slNo;
-	
+	private AreaMasterBean areaMasterBean = new AreaMasterBean();
+	private int areacategorymapid;
 	
 	public Integer getCategoryId() {
 		return categoryId;
@@ -38,6 +39,18 @@ public class CategoryMasterBean {
 	}
 	public void setCategoryImage(String categoryImage) {
 		this.categoryImage = categoryImage;
+	}
+	public AreaMasterBean getAreaMasterBean() {
+		return areaMasterBean;
+	}
+	public void setAreaMasterBean(AreaMasterBean areaMasterBean) {
+		this.areaMasterBean = areaMasterBean;
+	}
+	public int getAreacategorymapid() {
+		return areacategorymapid;
+	}
+	public void setAreacategorymapid(int areacategorymapid) {
+		this.areacategorymapid = areacategorymapid;
 	}
 	
 }

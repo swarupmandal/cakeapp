@@ -10,6 +10,7 @@ import java.util.Arrays;
 import org.zkoss.zul.Messagebox;
 
 import com.appsquad.cake.bean.AreaMasterBean;
+import com.appsquad.cake.bean.CategoryMasterBean;
 import com.appsquad.cake.bean.CityMasterBean;
 import com.appsquad.cake.database.DatabaseHandler;
 import com.appsquad.cake.database.Pbpstm;
@@ -304,6 +305,54 @@ public class AreaMasterDao {
 			e.printStackTrace();
 		}
 		return id;
+	}
+	
+	
+	public static ArrayList<AreaMasterBean> loadAreaWithCategory(CategoryMasterBean cbean){
+		int count = 0;
+		ArrayList<AreaMasterBean> list = new ArrayList<AreaMasterBean>();
+		if(list.size()>0){
+			list.clear();
+		}
+		
+		try {
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			ResultSet resultSet = null;
+			try {
+				connection = DatabaseHandler.createConnection();
+				preparedStatement = Pbpstm.createQuery(connection, AreaMasterSql.loadAreaWithCategorySql, Arrays.asList(cbean.getCategoryId()));
+				resultSet = preparedStatement.executeQuery();
+				while (resultSet.next()) {
+					AreaMasterBean bean = new AreaMasterBean();
+					count = count+1;
+					bean.setSlNo(count);
+					bean.setAreaId(resultSet.getInt("area_master_id"));
+					bean.setAreaName(resultSet.getString("area_name"));
+					
+					if(resultSet.getString("is_active").equalsIgnoreCase("Y")){
+						bean.setIsActive("YES");
+					}else {
+						bean.setIsActive("NO");
+					}
+					list.add(bean);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				Messagebox.show(e.getMessage(), "Error", Messagebox.OK, Messagebox.ERROR);
+				
+			}finally{
+				if(preparedStatement != null){
+					preparedStatement.close();
+				}
+				if(connection != null){
+					connection.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 }

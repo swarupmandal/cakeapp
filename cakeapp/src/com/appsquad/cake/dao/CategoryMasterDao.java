@@ -17,12 +17,6 @@ import com.appsquad.cake.sql.CategoryMasterSql;
 
 public class CategoryMasterDao {
 
-
-
-
-
-
-
 	public static int saveCategory(String userName, CategoryMasterBean bean){
 		int id =0;
 		
@@ -137,17 +131,128 @@ public class CategoryMasterDao {
 				}
 			}
 		} catch (Exception e) {
+			
 			e.printStackTrace();
 		}
 		return id;
 	}
 	
 	
+	public static int saveCategoryWithArea(String userName, CategoryMasterBean bean, AreaMasterBean ab){
+		int id =0;
+		
+		try {
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			try {
+				connection = DatabaseHandler.createConnection();
+				preparedStatement = Pbpstm.createQuery(connection, CategoryMasterSql.saveAreaWithCategorySql, Arrays.asList(ab.getAreaId(), bean.getCategoryId(), userName));
+				id = preparedStatement.executeUpdate();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				 Messagebox.show(e.getMessage(), "Error", Messagebox.OK, Messagebox.ERROR);
+				
+			}finally{
+				if(preparedStatement != null){
+					preparedStatement.close();
+				}
+				if(connection != null){
+					connection.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
 	
-
+	public static ArrayList<CategoryMasterBean> loadCategoryWithArea(CategoryMasterBean cbean){
+		int count = 0;
+		ArrayList<CategoryMasterBean> list = new ArrayList<CategoryMasterBean>();
+		if(list.size()>0){
+			list.clear();
+		}
+		
+		try {
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			ResultSet resultSet = null;
+			try {
+				connection = DatabaseHandler.createConnection();
+				preparedStatement = Pbpstm.createQuery(connection, CategoryMasterSql.loadCategoryWithAreaSql, Arrays.asList(cbean.getCategoryId()));
+				resultSet = preparedStatement.executeQuery();
+				while (resultSet.next()) {
+					CategoryMasterBean bean = new CategoryMasterBean();
+					count = count+1;
+					bean.setSlNo(count);
+					bean.setCategoryId(resultSet.getInt("category_id"));
+					bean.setCategoryName(resultSet.getString("category_name"));
+					bean.getAreaMasterBean().setAreaName(resultSet.getString("area_name"));
+					bean.setAreacategorymapid(resultSet.getInt("area_category_map_id"));
+					
+					if(resultSet.getString("is_active").equalsIgnoreCase("Y")){
+						bean.setIsActive("YES");
+					}else {
+						bean.setIsActive("NO");
+					}
+					list.add(bean);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				Messagebox.show(e.getMessage(), "Error", Messagebox.OK, Messagebox.ERROR);
+				
+			}finally{
+				if(preparedStatement != null){
+					preparedStatement.close();
+				}
+				if(connection != null){
+					connection.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
-
-	
-
+	public static int updateCategoryWithArea(String userName, CategoryMasterBean bean){
+		int id =0;
+		
+		if(bean.getIsActive().equalsIgnoreCase("YES")){
+			bean.setIsActive("Y");
+		}else {
+			bean.setIsActive("N");
+		}
+		
+		
+		try {
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			try {
+				connection = DatabaseHandler.createConnection();
+				preparedStatement = Pbpstm.createQuery(connection, CategoryMasterSql.updateCategoryAreaSql, Arrays.asList(bean.getIsActive(), userName, bean.getAreacategorymapid()));
+				System.out.println("SQL " + preparedStatement);
+				id = preparedStatement.executeUpdate();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+				Messagebox.show(e.getMessage(), "Error", Messagebox.OK, Messagebox.ERROR);
+				
+				
+			}finally{
+				if(preparedStatement != null){
+					preparedStatement.close();
+				}
+				if(connection != null){
+					connection.close();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
 	
 }

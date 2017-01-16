@@ -28,6 +28,31 @@ public class CategoryMasterService {
 		return i;
 	}
 	
+	public static int insertCategoryWithArea(String userName, CategoryMasterBean bean, AreaMasterBean areaBean){
+		int i =0;
+		i = CategoryMasterDao.saveCategoryWithArea(userName, bean, areaBean);
+		return i;
+	}
+	
+	public static ArrayList<CategoryMasterBean> loadCategoriYWithArea(){
+		ArrayList<CategoryMasterBean> list = new ArrayList<CategoryMasterBean>();
+		list = CategoryMasterDao.loadCategory();
+		return list;
+	}
+	
+	public static ArrayList<CategoryMasterBean> loadCategoriYWithAreas(CategoryMasterBean bean){
+		ArrayList<CategoryMasterBean> list = new ArrayList<CategoryMasterBean>();
+		list = CategoryMasterDao.loadCategoryWithArea(bean);
+		return list;
+	}
+	
+	public static int updatecategoryWithArea(String userName, CategoryMasterBean bean){
+		int i =0;
+		i = CategoryMasterDao.updateCategoryWithArea(userName, bean);
+		return i;
+	}
+	
+	
 	
 	
 	
@@ -50,8 +75,29 @@ public class CategoryMasterService {
 		bean.setCategoryImage(null);
 	}
 	
+	public static boolean categoryAreavalidation(CategoryMasterBean bean, AreaMasterBean areaBean){
+		if(bean.getCategoryId() !=null){
+			if(areaBean.getAreaId() != null){
+				return true;
+			}else {
+				Messagebox.show("Select Area", "Alert", Messagebox.OK, Messagebox.EXCLAMATION);
+				return false;
+			}
+			
+		}else {
+			Messagebox.show("Select Category", "Alert", Messagebox.OK, Messagebox.EXCLAMATION);
+			return false;
+		}
+	}
 
-
-
+	public static void onClickExClear(CategoryMasterBean categoryMasterBean, AreaMasterBean areaMasterBean){
+		
+		categoryMasterBean.setCategoryId(null);
+		categoryMasterBean.setCategoryName(null);
+		
+		areaMasterBean.setAreaId(null);
+		areaMasterBean.setAreaName(null);
+		
+	}
 
 }

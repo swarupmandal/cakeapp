@@ -47,7 +47,7 @@ public class AreaMasterController {
 		session = Sessions.getCurrent();
 		userId = (String) session.getAttribute("userId");
 		
-		areaMasterBeanList = AreaMasterService.loadAreas(userId, areaMasterBean);
+		areaMasterBeanList = AreaMasterService.loadAreas();
 		cityMasterBeanList = CityMasterDao.loadCity();
 	}
 
@@ -60,7 +60,7 @@ public class AreaMasterController {
 			if(i>0){
 				Messagebox.show("Saved Successfully", "Information", Messagebox.OK, Messagebox.INFORMATION);
 				AreaMasterService.areaMasterClear(areaMasterBean);
-				areaMasterBeanList= AreaMasterService.loadAreas(userId, areaMasterBean);
+				areaMasterBeanList= AreaMasterService.loadAreas();
 			}
 		}	
 	}

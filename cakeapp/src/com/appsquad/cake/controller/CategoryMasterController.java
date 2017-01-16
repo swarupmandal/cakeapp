@@ -22,8 +22,14 @@ import com.appsquad.cake.model.service.CategoryMasterService;
 public class CategoryMasterController {
 
 	private CategoryMasterBean categoryMasterBean = new CategoryMasterBean();
+	private CategoryMasterBean exCategoryMasterBean = new CategoryMasterBean();
+	private CategoryMasterBean selectedexCategoryMasterBean = new CategoryMasterBean();
+	private AreaMasterBean exAreaMasterBean = new AreaMasterBean();
+	
 	
 	private ArrayList<CategoryMasterBean> categoryMasterList;
+	private ArrayList<AreaMasterBean> exAreaMasterList;
+	private ArrayList<CategoryMasterBean> categoryAreaMapList;
 	
 	private String userId;
 	public Session session = null;
@@ -36,6 +42,7 @@ public class CategoryMasterController {
 		userId = (String) session.getAttribute("userId");
 		
 		categoryMasterList = CategoryMasterService.loadCategories(userId, categoryMasterBean);
+		
 	}
 
 	@Command
@@ -52,6 +59,13 @@ public class CategoryMasterController {
 		}	
 	}
 	
+	
+	@Command
+	@NotifyChange("*")
+	public void onSelectedExistingCategory(){
+		categoryAreaMapList = CategoryMasterService.loadCategoriYWithAreas(selectedexCategoryMasterBean);
+	}
+	
 	@Command
 	@NotifyChange("*")
 	public void onClickUpdate(@BindingParam("bean") CategoryMasterBean bean){
@@ -63,7 +77,73 @@ public class CategoryMasterController {
 			categoryMasterList = CategoryMasterService.loadCategories(userId, categoryMasterBean);
 		}
 	}
+	
+	@Command
+	@NotifyChange("*")
+	public void onSelectExCat(){
+		exAreaMasterList = AreaMasterService.loadAreasforCategoryMapped(exCategoryMasterBean);
+	}
+	
+	
+	@Command
+	@NotifyChange("*")
+	public void onClickSaveAreaWithCategory(){
 
+		if(CategoryMasterService.categoryAreavalidation(exCategoryMasterBean, exAreaMasterBean)){
+			int i = 0;
+			i = CategoryMasterService.insertCategoryWithArea(userId, exCategoryMasterBean, exAreaMasterBean);
+			if(i>0){
+				Messagebox.show("Saved Successfully", "Information", Messagebox.OK, Messagebox.INFORMATION);
+				CategoryMasterService.categotyMasterClear(categoryMasterBean);
+				CategoryMasterService.onClickExClear(exCategoryMasterBean, exAreaMasterBean);
+				categoryMasterList = CategoryMasterService.loadCategories(userId, categoryMasterBean);
+				if(exAreaMasterList != null){
+					 exAreaMasterList.clear();
+				}
+				
+			}
+		}	
+	
+	}
+	
+	
+	
+	@Command
+	@NotifyChange("*")
+	public void onClickExClear(){
+		CategoryMasterService.onClickExClear(exCategoryMasterBean, exAreaMasterBean);
+		categoryMasterList = CategoryMasterService.loadCategories(userId, categoryMasterBean);
+		if(exAreaMasterList != null){
+		 exAreaMasterList.clear();
+		}
+	}
+	
+	@Command
+	@NotifyChange("*")
+	public void updateCategoryAreaMap(@BindingParam("bean") CategoryMasterBean bean){
+		int i =0;
+		i = CategoryMasterService.updatecategoryWithArea(userId, bean);
+
+		
+		if(i>0){
+			Messagebox.show("Updated Successfully", "Information", Messagebox.OK, Messagebox.INFORMATION);
+			categoryAreaMapList = CategoryMasterService.loadCategoriYWithAreas(selectedexCategoryMasterBean);
+		}
+		
+	}
+	
+	@Command
+	@NotifyChange("*")
+	public void onClickClearCityMap(){
+		selectedexCategoryMasterBean.setCategoryId(null);
+		selectedexCategoryMasterBean.setCategoryName(null);
+		categoryMasterList = CategoryMasterService.loadCategories(userId, categoryMasterBean);
+		if(categoryAreaMapList != null){
+			categoryAreaMapList.clear();
+		}
+	}
+	
+	
 	public CategoryMasterBean getCategoryMasterBean() {
 		return categoryMasterBean;
 	}
@@ -95,6 +175,48 @@ public class CategoryMasterController {
 
 	public void setSession(Session session) {
 		this.session = session;
+	}
+
+	public CategoryMasterBean getExCategoryMasterBean() {
+		return exCategoryMasterBean;
+	}
+
+	public void setExCategoryMasterBean(CategoryMasterBean exCategoryMasterBean) {
+		this.exCategoryMasterBean = exCategoryMasterBean;
+	}
+
+	public ArrayList<AreaMasterBean> getExAreaMasterList() {
+		return exAreaMasterList;
+	}
+
+	public void setExAreaMasterList(ArrayList<AreaMasterBean> exAreaMasterList) {
+		this.exAreaMasterList = exAreaMasterList;
+	}
+
+	public AreaMasterBean getExAreaMasterBean() {
+		return exAreaMasterBean;
+	}
+
+	public void setExAreaMasterBean(AreaMasterBean exAreaMasterBean) {
+		this.exAreaMasterBean = exAreaMasterBean;
+	}
+
+	public ArrayList<CategoryMasterBean> getCategoryAreaMapList() {
+		return categoryAreaMapList;
+	}
+
+	public void setCategoryAreaMapList(
+			ArrayList<CategoryMasterBean> categoryAreaMapList) {
+		this.categoryAreaMapList = categoryAreaMapList;
+	}
+
+	public CategoryMasterBean getSelectedexCategoryMasterBean() {
+		return selectedexCategoryMasterBean;
+	}
+
+	public void setSelectedexCategoryMasterBean(
+			CategoryMasterBean selectedexCategoryMasterBean) {
+		this.selectedexCategoryMasterBean = selectedexCategoryMasterBean;
 	}
 	
 	
