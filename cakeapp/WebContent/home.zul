@@ -53,6 +53,12 @@
 											</treerow>
 										</treeitem>
 										
+										<treeitem open="false">
+											<treerow>
+												<treecell label="Item Master" onClick='inclResults.setSrc("/WEB-INF/view/itemMaster.zul")'></treecell>
+											</treerow>
+										</treeitem>
+										
 						
 									</treechildren>
 								</treeitem>

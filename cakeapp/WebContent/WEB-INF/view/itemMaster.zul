@@ -1,45 +1,51 @@
-<?page title="Category" contentType="text/html;charset=UTF-8"?>
+<?page title="Item Master" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="CATEGORY MASTER" border="none" apply="org.zkoss.bind.BindComposer" 
-  viewModel="@id('vm') @init('com.appsquad.cake.controller.CategoryMasterController')">
-
+<window title="ITEM MASTER" border="none" apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('com.appsquad.cake.controller.ItemMasterController')">
 	<div>
   	<tabbox>
   		<tabs>
-  			<tab label="Add Category"></tab>
-  			<tab label="Area Category Map"></tab>
+  			<tab label="Add Item"></tab>
+  			<tab label="Item Category Map"></tab>
+  			
   		</tabs>
   		<tabpanels>
   			<tabpanel>
   				
   				<div>
-  		<hlayout>
-  			<textbox placeholder="Enter Category Name" value="@bind(vm.categoryMasterBean.categoryName)"></textbox>
-  			<textbox placeholder="Enter Category Image" value="@bind(vm.categoryMasterBean.categoryImage)"></textbox> 
-  			<button label="Save" style="font-size : bold" onClick="@command('onClickSave')"></button>
+  		<hlayout spacing="20px">
+  			<textbox placeholder="Enter Item Name" value="@bind(vm.itemMasterBean.itemName)"></textbox>
+  			<textbox placeholder="Enter Image Url" value="@bind(vm.itemMasterBean.itemImage)"></textbox>
+  			<textbox placeholder="Enter Item Desc" value="@bind(vm.itemMasterBean.itemDesc)"></textbox>
+  			<doublebox placeholder="Enter Price" value="@bind(vm.itemMasterBean.price)"></doublebox>
+  			<button label="Save" style="font-weight : bold" onClick="@command('onClickSave')"></button>
   		</hlayout>
   	</div>
   	<space></space>
   	<div>	
-  		<grid model="@bind(vm.categoryMasterList)">
-  			<columns>
-  				<column label="Sl No"></column>
-  				<column label="Category" style="font-size : bold"></column>
-  				<column label="Image" style="font-size : bold"></column>
-  				<column label="Active" style="font-size : bold"></column>
-  				<column label="Action" style="font-size : bold"></column>
+  		<grid model="@bind(vm.itemMasterBeanList)" mold="paging" pageSize="11">
+  			<columns sizable="true">
+  				<column label="Sl No" width="40px"></column>
+  				<column label="Item" style="font-weight : bold"></column>
+  				<column label="Image" style="font-weight : bold"></column>
+  				<column label="Desc" style="font-weight : bold"></column>
+  				<column label="Price" style="font-weight : bold"></column>
+  				<column label="Active" style="font-weight : bold" width="150px"></column>
+  				<column label="Action" style="font-weight : bold"></column>
   			</columns>
   			<rows>
   			  <template name="model" var = "v">	
   				<row>
   					<label value="@bind(v.slNo)"></label>
-  					<textbox value="@bind(v.categoryName)"></textbox>
-  					<textbox value="@bind(v.categoryImage)"></textbox>
-  					<combobox value="@bind(v.isActive)" readonly="true">
+  					<textbox value="@bind(v.itemName)"></textbox>
+  					<textbox value="@bind(v.itemImage)"></textbox>
+  					<textbox value="@bind(v.itemDesc)"></textbox>
+  					<doublebox value="@bind(v.price)"></doublebox>
+  					<combobox value="@bind(v.isActive)" readonly="true" width="100%">
   					  <comboitem label="YES"></comboitem>
   					  <comboitem label="NO"></comboitem>
 		  				    </combobox>
-		  					<button label="Update" style="font-size : bold" onClick="@command('onClickUpdate', bean = v)"></button>
+		  					<button label="Update" style="font-weight : bold" onClick="@command('onClickUpdate', bean = v)"></button>
 		  				</row>
 		  			  </template>	
 		  			</rows>
@@ -49,7 +55,7 @@
 		  
   		</tabpanel>
   		    <tabpanel>
-  				<div>
+  				<!-- <div>
 	   		  <hlayout spacing="30px">	
 	   				<combobox placeholder="Select Category" model="@bind(vm.categoryMasterList)" selectedItem="@bind(vm.exCategoryMasterBean)" value="@bind(vm.exCategoryMasterBean.categoryName)" 
 	   				   readonly="true" onSelect="@command('onSelectExCat')">
@@ -106,11 +112,13 @@
 					  </template>
 					</rows>
 				</grid>
-			</div>
+			</div> -->
   			</tabpanel>
+  			
   	    </tabpanels>
   	</tabbox>
-	</div>  	
+	</div>
+
 
 
 
