@@ -2,6 +2,8 @@ package com.appsquad.cake.bean;
 
 public class ItemMasterBean {
 
+	
+	private int itemCategoryMappedId;
 	private Integer ItemId;
 	private String ItemName;
 	private String ItemImage;
@@ -10,6 +12,7 @@ public class ItemMasterBean {
 	private Double price;
 	private int slNo;
 	
+	private CategoryMasterBean categoryMasterBean = new CategoryMasterBean();
 	
 	public Integer getItemId() {
 		return ItemId;
@@ -52,6 +55,18 @@ public class ItemMasterBean {
 	}
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+	public int getItemCategoryMappedId() {
+		return itemCategoryMappedId;
+	}
+	public void setItemCategoryMappedId(int itemCategoryMappedId) {
+		this.itemCategoryMappedId = itemCategoryMappedId;
+	}
+	public CategoryMasterBean getCategoryMasterBean() {
+		return categoryMasterBean;
+	}
+	public void setCategoryMasterBean(CategoryMasterBean categoryMasterBean) {
+		this.categoryMasterBean = categoryMasterBean;
 	}
 	
 	

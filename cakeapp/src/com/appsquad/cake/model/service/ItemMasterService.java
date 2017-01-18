@@ -9,7 +9,7 @@ public class ItemMasterService {
 
 	public static int saveItem(String userName, ItemMasterBean bean){
 		int i =0;
-		i= ItemMasterDao.saveCategory(userName, bean);
+		i= ItemMasterDao.saveItem(userName, bean);
 		return i;
 	}
 	
@@ -25,14 +25,23 @@ public class ItemMasterService {
 		return i;
 	}
 	
+	public static ArrayList<ItemMasterBean> loadItemnotAss(int catId){
+		ArrayList<ItemMasterBean> list = new ArrayList<ItemMasterBean>();
+		list = ItemMasterDao.loadItemNotAssignedToCat(catId);
+		return list;			
+	}
 	
+	public static int saveMappedItemWithCategory(String userName, int itemId, int categoryId){
+		int i =0;
+		i= ItemMasterDao.saveMapperCategoryAndItem(userName, itemId, categoryId);
+		return i;
+	}
 	
-	
-	
-	
-	
-	
-	
+	public static ArrayList<ItemMasterBean> loadAssignedItemAndCategory(int catId){
+		ArrayList<ItemMasterBean> list = new ArrayList<ItemMasterBean>();
+		list = ItemMasterDao.loadItemMappedWithCat(catId);
+		return list;			
+	}
 	
 	
 	

@@ -55,64 +55,64 @@
 		  
   		</tabpanel>
   		    <tabpanel>
-  				<!-- <div>
+  				<div>
 	   		  <hlayout spacing="30px">	
-	   				<combobox placeholder="Select Category" model="@bind(vm.categoryMasterList)" selectedItem="@bind(vm.exCategoryMasterBean)" value="@bind(vm.exCategoryMasterBean.categoryName)" 
-	   				   readonly="true" onSelect="@command('onSelectExCat')">
+	   				<combobox placeholder="Select Category" model="@bind(vm.categoryMasterList)" selectedItem="@bind(vm.categoryMasterBean)" value="@bind(vm.categoryMasterBean.categoryName)" 
+	   				   readonly="true" onSelect="@command('onSelectCategory')">
 	   					<template name="model" var = "v">
 	   						<comboitem value="@bind(v.categoryId)" label="@bind(v.categoryName)"></comboitem>
 	   					</template>
 	   				</combobox>
 	   				
-	   				<combobox placeholder="Select Area" model="@bind(vm.exAreaMasterList)" selectedItem="@bind(vm.exAreaMasterBean)" 
-	   				 value="@bind(vm.exAreaMasterBean.areaName)" readonly="true">
+	   				<combobox placeholder="Select Item" model="@bind(vm.itemList)" selectedItem="@bind(vm.itemBean)" 
+	   				 value="@bind(vm.itemBean.itemName)" readonly="true">
 	   					<template name="model" var = "v">
-	   					 <comboitem label="@bind(v.areaName)" value="@bind(v.areaId)"></comboitem>
+	   					 <comboitem label="@bind(v.itemName)" value="@bind(v.itemId)"></comboitem>
 	   					</template>	
 	   				</combobox>
 	   				
-	   				<button label="Save" style="font-weight : bold" onClick="@command('onClickSaveAreaWithCategory')"></button>
-	   				<button label="Clear" onClick="@command('onClickExClear')" style="font-weight : bold"></button>
+	   				<button label="Save" style="font-weight : bold" onClick="@command('onClickSaveItemWithCategory')"></button>
+	   				<button label="Clear" onClick="@command('onClickClearCatItem')" style="font-weight : bold"></button>
 	   		  </hlayout>	
 	   		</div>
 	   		<space></space>
 	   		<div>
 	   			<hlayout spacing="30px">
-				<combobox placeholder="Select Category" model="@bind(vm.categoryMasterList)" selectedItem="@bind(vm.selectedexCategoryMasterBean)" 
-				 value="@bind(vm.selectedexCategoryMasterBean.categoryName)" 
-	   			   onSelect="@command('onSelectedExistingCategory')" readonly="true">
+				<combobox placeholder="Select Category" model="@bind(vm.categoryMasterList)" selectedItem="@bind(vm.selectedcategoryMasterBean)" 
+				 value="@bind(vm.selectedcategoryMasterBean.categoryName)" 
+	   			   onSelect="@command('onSelectedCategory')" readonly="true">
 	   				<template name="model" var = "v">
 	   					<comboitem value="@bind(v.categoryId)" label="@bind(v.categoryName)"></comboitem>
 	   				</template>
 	   			</combobox>
 	   			
-	   			<button label="Clear" onClick="@command('onClickClearCityMap')" style="font-weight : bold"></button>
+	   			<button label="Clear" onClick="@command('onClickClearItemCategoryMap')" style="font-weight : bold"></button>
 	   			</hlayout>
 	   			<space></space>			
-				<grid model="@bind(vm.categoryAreaMapList)">
+				<grid model="@bind(vm.itemCategoryMappedBeanList)">
 				 	<columns>
-				 	 <column label="Sl No" style="font-weight : bold"></column>
-				 	 <column label="Category" style="font-weight : bold"></column>
-					 <column label="Area" style="font-weight : bold"></column>	
+				 	 <column label="Sl No" style="font-weight : bold" width="40px"></column>
+				 	  <column label="Category" style="font-weight : bold"></column>
+				 	 <column label="Item" style="font-weight : bold"></column>
 					 <column label="Active"></column>	
 					 <column label="Action"></column>	
 					</columns>
 					<rows>
 					  <template name="model" var = "v">	
 						<row>
-							<label value="@bind(v.slNo)"></label>
-							<textbox value="@bind(v.categoryName)" readonly="true"></textbox>
-							<textbox value="@bind(v.areaMasterBean.areaName)" readonly="true"></textbox>
+							<label value="@bind(v.slNo)" width="100%"></label>
+							<textbox value="@bind(v.categoryMasterBean.categoryName)" readonly="true"></textbox>
+							<textbox value="@bind(v.itemName)" readonly="true"></textbox>
 							<combobox value="@bind(v.isActive)" readonly="true">
 								<comboitem label="YES"></comboitem>
 								<comboitem label="NO"></comboitem>
 							</combobox>
-							<button label="Update" style="font-weight : bold" onClick="@command('updateCategoryAreaMap', bean = v)"></button>
+							<button label="Update" style="font-weight : bold" onClick="@command('updateCategoryItemMap', bean = v)"></button>
 						</row>
 					  </template>
 					</rows>
 				</grid>
-			</div> -->
+			</div>
   			</tabpanel>
   			
   	    </tabpanels>
